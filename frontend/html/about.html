@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About | VulnERP</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- HEADER -->
+    <header class="page-header">
+        <h1>Welcome to VulnERP</h1>
+        <p class="subtext">
+            A deliberately vulnerable college ERP environment for
+            practical security testing and learning.
+        </p>
+    </header>
+
+   
+
+    <!-- INFO SECTIONS -->
+    <section class="info-grid">
+
+        <div class="info-box">
+            <h3>Platform Objective</h3>
+            <p>
+                VulnERP helps learners identify real-world security
+                weaknesses commonly found in enterprise applications,
+                particularly in authentication and user input handling.
+            </p>
+        </div>
+
+        <div class="info-box">
+            <h3>Previous Screen Explanation</h3>
+            <p>
+                The initial login page relied entirely on client-side logic.
+                This was intentional and demonstrates why frontend-based
+                security controls should never be trusted.
+            </p>
+        </div>
+
+        <div class="info-box">
+            <h3>How Challenges Work</h3>
+            <p>
+                Not all vulnerabilities appear after login. Some issues may
+                exist earlier in the workflow, even before role-based access
+                is granted.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- HINT -->
+    <div class="hint-box">
+        <strong>Note:</strong> This is not a game that always begins after
+        clicking a start button. Observe how data is processed on each page —
+        sometimes the vulnerability is already in front of you.
+    </div>
+
+    <!-- WARNING -->
+    <div class="warning-box">
+        This application is provided strictly for educational and ethical
+        security practice. Testing real systems without authorization is illegal.
+    </div>
+    
+     <!-- PRIMARY ACTION -->
+    <div class="primary-action">
+        <button onclick="location.href='role-select.html'">
+            Proceed to Role Selection
+        </button>
+    </div>
+
+    <!-- FEEDBACK / XSS ENTRY -->
+    <section class="feedback-box">
+        <h2>Suggestions & Feedback</h2>
+        <p class="feedback-text">
+            Share observations, issues, or suggestions encountered during usage.
+        </p>
+
+        <form>
+            <input type="text" placeholder="Name">
+            <input type="email" placeholder="Email">
+            <textarea placeholder="Your message"></textarea>
+
+            <!-- intentionally unsanitized -->
+            <button type="button">Submit</button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer-text">
+        Made with ❤️ by <span>Soam & Vishal</span>
+    </footer>
+
+</div>
+
+</body>
+</html>
