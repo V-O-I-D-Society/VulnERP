@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Dashboard | VulnERP</title>
+  <link rel="stylesheet" href="../../css/dashboard.css">
+
+  <!-- ✅ FACULTY ACCESS CONTROL (FIXED) -->
+  <script>
+    /*
+      Must match EXACT keys set during login
+      From faculty-login.html:
+        role = "faculty"
+        faculty_auth = "true"
+        faculty_id = "<username>"
+    */
+
+    if (
+      sessionStorage.getItem("role") !== "faculty" ||
+      sessionStorage.getItem("faculty_auth") !== "true"
+    ) {
+      alert("Unauthorized access");
+      window.location.href = "/frontend/html/index.html";
+    }
+  </script>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>⭐ Faculty ERP</span>
+  <span id="facultyName"></span>
+</div>
+
+<!-- FACULTY INFO -->
+<div class="card">
+  <h2>Faculty Panel</h2>
+  <p>
+    Logged in as: <b id="facultyId"></b>
+  </p>
+</div>
+
+<!-- STUDENT DATA EDIT -->
+<div class="card">
+  <h2>Edit Student Academic Data</h2>
+
+  <table>
+    <tr>
+      <td>Student Username</td>
+      <td><input type="text" id="studentUser" placeholder="e.g. vansh"></td>
+    </tr>
+
+    <tr>
+      <td>CGPA</td>
+      <td><input type="text" id="cgpa" placeholder="7.5"></td>
+    </tr>
+
+    <tr>
+      <td>Attendance</td>
+      <td><input type="text" id="attendance" placeholder="82%"></td>
+    </tr>
+
+    <tr>
+      <td>Backlogs</td>
+      <td><input type="number" id="backlogs" placeholder="0"></td>
+    </tr>
+  </table>
+
+  <button onclick="updateStudent()">Update Student</button>
+</div>
+
+<p class="footer">Made with ❤️ by Soam & Vishal</p>
+
+<script>
+  /*
+    Faculty session details
+  */
+  const facultyId = sessionStorage.getItem("faculty_id");
+  document.getElementById("facultyId").innerText = facultyId;
+  document.getElementById("facultyName").innerText = facultyId.toUpperCase();
+
+  /*
+    ⚠️ Intentionally vulnerable:
+    - No backend
+    - No student existence validation
+    - No authorization per student
+  */
+  function updateStudent() {
+    const student = document.getElementById("studentUser").value;
+    const cgpa = document.getElementById("cgpa").value;
+    const attendance = document.getElementById("attendance").value;
+    const backlogs = document.getElementById("backlogs").value;
+
+    if (!student) {
+      alert("Enter student username");
+      return;
+    }
+
+    alert(
+      "Student data updated!\n\n" +
+      "User: " + student +
+      "\nCGPA: " + cgpa +
+      "\nAttendance: " + attendance +
+      "\nBacklogs: " + backlogs +
+      "\n\n(Note: Changes are not persisted – demo only)"
+    );
+  }
+</script>
+
+</body>
+</html>

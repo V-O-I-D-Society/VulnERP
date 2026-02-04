@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Login | VulnERP</title>
+  <link rel="stylesheet" href="../../css/auth.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <h2 id="loginTitle">Faculty Login</h2>
+
+    <!-- STEP 1: USERNAME + PASSWORD -->
+    <div id="loginStep">
+      <input type="text" id="username" placeholder="Faculty ID">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="continueLogin()">Continue</button>
+    </div>
+
+    <!-- STEP 2: OTP (same page) -->
+    <div id="otpStep" style="display:none;">
+      <input type="text" id="otp" placeholder="Enter 3-digit OTP">
+      <button onclick="verifyOTP()">Verify OTP</button>
+      <p class="hint">OTP sent to registered email</p>
+    </div>
+
+    <p class="footer">Made with ❤️ by Soam & Vishal</p>
+
+  </div>
+</div>
+
+<script>
+/*
+  ✔ Same page OTP
+  ✔ Fixed OTP = 123 (backend later)
+  ✔ Clean & realistic flow
+*/
+
+// demo faculty users (backend later)
+const facultyUsers = ["faculty1", "faculty2", "hodit"];
+const CORRECT_OTP = "123";
+
+function continueLogin() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!facultyUsers.includes(username) || password.length < 5) {
+    alert("Invalid faculty credentials");
+    return;
+  }
+
+  // store faculty session (basic)
+  sessionStorage.setItem("role", "faculty");
+  sessionStorage.setItem("faculty_id", username);
+
+  // switch UI to OTP
+  document.getElementById("loginStep").style.display = "none";
+  document.getElementById("otpStep").style.display = "block";
+  document.getElementById("loginTitle").innerText = "OTP Verification";
+}
+
+function verifyOTP() {
+  const otp = document.getElementById("otp").value.trim();
+
+  if (otp === CORRECT_OTP) {
+    sessionStorage.setItem("faculty_auth", "true");
+    window.location.href = "faculty-dashboard.html";
+  } else {
+    alert("Invalid OTP");
+  }
+}
+</script>
+
+</body>
+</html>

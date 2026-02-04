@@ -18,8 +18,6 @@
         </p>
     </header>
 
-   
-
     <!-- INFO SECTIONS -->
     <section class="info-grid">
 
@@ -54,39 +52,41 @@
 
     <!-- HINT -->
     <div class="hint-box">
-        <strong>Note:</strong> This is not a game that always begins after
-        clicking a start button. Observe how data is processed on each page —
-        sometimes the vulnerability is already in front of you.
+        <strong>Note:</strong> Observe how user input is handled.
+        Sometimes what you enter is reflected right back at you.
     </div>
 
     <!-- WARNING -->
     <div class="warning-box">
         This application is provided strictly for educational and ethical
-        security practice. Testing real systems without authorization is illegal.
+        security practice.
     </div>
-    
-     <!-- PRIMARY ACTION -->
+
+    <!-- PRIMARY ACTION -->
     <div class="primary-action">
         <button onclick="location.href='role-select.html'">
             Proceed to Role Selection
         </button>
     </div>
 
-    <!-- FEEDBACK / XSS ENTRY -->
+    <!-- 🔴 FEEDBACK / REFLECTED XSS -->
     <section class="feedback-box">
         <h2>Suggestions & Feedback</h2>
-        <p class="feedback-text">
-            Share observations, issues, or suggestions encountered during usage.
-        </p>
 
-        <form>
-            <input type="text" placeholder="Name">
-            <input type="email" placeholder="Email">
-            <textarea placeholder="Your message"></textarea>
-
-            <!-- intentionally unsanitized -->
-            <button type="button">Submit</button>
+        <form method="GET" action="/about">
+            <input type="text" name="name" placeholder="Name">
+            <input type="email" name="email" placeholder="Email">
+            <textarea name="message" placeholder="Your message"></textarea>
+            <button type="submit">Submit</button>
         </form>
+
+        <!-- 🔥 Vulnerable reflection -->
+        {% if feedback %}
+        <div class="feedback-output">
+            <h3>Preview:</h3>
+            <p>{{ feedback }}</p>
+        </div>
+        {% endif %}
     </section>
 
     <!-- FOOTER -->

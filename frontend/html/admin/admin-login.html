@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login | VulnERP</title>
+  <link rel="stylesheet" href="../../css/admin.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <h2>Admin Login</h2>
+
+    <input type="text" id="adminUser" placeholder="Admin Username">
+    <input type="password" id="adminPass" placeholder="Password">
+
+    <button onclick="adminLogin()">Login</button>
+
+    <p class="link">
+      <a href="admin-reset.html">Forgot admin password?</a>
+    </p>
+
+    <p class="footer">Made with ❤️ by Soam & Vishal</p>
+
+  </div>
+</div>
+
+<script>
+function adminLogin() {
+  const user = document.getElementById("adminUser").value;
+  const pass = document.getElementById("adminPass").value;
+
+  if (user === "admin" && pass === "admin@123") {
+    sessionStorage.setItem("admin_auth", "true");
+    window.location.href = "admin-dashboard.html";
+  } else {
+    alert("Invalid admin credentials");
+  }
+}
+</script>
+
+</body>
+</html>

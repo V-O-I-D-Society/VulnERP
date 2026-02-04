@@ -1,0 +1,165 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+.topbar {
+  background: #020617;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card {
+  background: #020617;
+  margin: 30px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.box {
+  background: #020617;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #1e293b;
+}
+
+.footer {
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+.top-right {
+  display: flex;
+  flex-direction: column;   /* username ke niche button */
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.user-name {
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #e5e7eb;
+  padding: 4px 10px;
+  font-size: 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #1e293b;
+  border-color: #475569;
+}
+/* ===== FACULTY EDIT STUDENT FORM ===== */
+
+.card {
+  background: linear-gradient(145deg, #050b1f, #0b1430);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin: 30px auto;
+  max-width: 1000px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+.card h2 {
+  color: #ffffff;
+  font-size: 26px;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+
+/* TABLE LAYOUT */
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.card table tr {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.card table td {
+  padding: 14px 8px;
+  font-size: 15px;
+  color: #e4e9f0;
+}
+
+/* LEFT LABEL */
+.card table td:first-child {
+  width: 40%;
+  color: #cfd6e4;
+}
+
+/* INPUT FIELDS */
+.card input {
+  width: 260px;
+  padding: 8px 10px;
+  background: #ffffff;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* BUTTON */
+.card button {
+  margin-top: 18px;
+  padding: 8px 18px;
+  background: #ffffff;
+  color: #000;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.card button:hover {
+  background: #e6e6e6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .card input {
+    width: 100%;
+  }
+
+  .card table td:first-child {
+    width: 100%;
+    display: block;
+    padding-bottom: 6px;
+  }
+
+  .card table td:last-child {
+    display: block;
+    padding-bottom: 14px;
+  }
+}

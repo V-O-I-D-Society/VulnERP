@@ -8,10 +8,13 @@ class User:
         self.user_id = user_id
         self.username = username
         self.role = role
-        self.password = password
+        self.password = password  # 🔴 Weak: plain text
         self.marks = marks
 
     def to_dict(self):
+        """
+        🔴 Includes only non-sensitive info
+        """
         return {
             "user_id": self.user_id,
             "username": self.username,
@@ -20,19 +23,27 @@ class User:
         }
 
 
+# -----------------------------
+# Database Connection
+# -----------------------------
 def get_db():
     return sqlite3.connect(DB_PATH)
 
 
-# ================================
-# VULNERABLE USER LOOKUP (SQLi)
-# ================================
+# ==============================
+# VULNERABLE USER LOOKUP
+# SQL Injection Demo
+# ==============================
 def get_user_by_username(username):
     conn = get_db()
     cursor = conn.cursor()
 
-    # ❌ SQL INJECTION VULNERABILITY
-    query = f"SELECT id, username, role, password, marks FROM users WHERE username = '{username}'"
+    # 🔴 Direct string interpolation
+    query = f"""
+        SELECT id, username, role, password, marks
+        FROM users
+        WHERE username = '{username}'
+    """
     cursor.execute(query)
 
     row = cursor.fetchone()
@@ -44,18 +55,23 @@ def get_user_by_username(username):
     return None
 
 
-# ================================
-# USER SEARCH (SQLi)
-# ================================
+# ==============================
+# USER SEARCH
+# SQL Injection Demo
+# ==============================
 def search_users(keyword):
     conn = get_db()
     cursor = conn.cursor()
 
-    # ❌ SQL INJECTION
-    query = f"SELECT id, username, role, marks FROM users WHERE username LIKE '%{keyword}%'"
+    # 🔴 Unsafe LIKE query
+    query = f"""
+        SELECT id, username, role, marks
+        FROM users
+        WHERE username LIKE '%{keyword}%'
+    """
     cursor.execute(query)
 
     rows = cursor.fetchall()
     conn.close()
 
-    return [User(*row) for row in rows]
+    return [User(*row, password="test123") for row in rows]  # 🔴 Weak password default

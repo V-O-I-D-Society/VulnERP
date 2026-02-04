@@ -6,8 +6,9 @@
 
     <!--
         VulnERP Training Environment
-        This page demonstrates client-side
-        information disclosure & weak auth.
+        Demonstrates:
+        - Client-side auth trust
+        - Hardcoded credentials
     -->
 
     <link rel="stylesheet" href="../css/landing.css">
@@ -17,81 +18,75 @@
 </head>
 <body>
 
-    <div class="auth-wrapper">
-        <div class="auth-card">
+<div class="auth-wrapper">
+    <div class="auth-card">
 
-            <h1><span>STUDENT</span> PORTAL</h1>
-
-            <form onsubmit="return false;">
-                <div class="field">
-                    <input type="text" id="username" placeholder="Username">
-                    <small class="error" id="userError">
-                        You must enter a valid USERNAME
-                    </small>
-                </div>
-
-                <div class="field">
-                    <input type="password" id="password" placeholder="Password">
-                    <span class="toggle" onclick="togglePassword()">👁</span>
-                    <small class="error" id="passError">
-                        Please enter your Password.
-                    </small>
-                </div>
-
-                <button id="loginBtn" onclick="checkLogin()">
-                    Login
-                </button>
-            </form>
-
-            <div class="footer-text">
-                Made with ❤️ by <span>Soam & Vishal</span>
+        <h1><span>STUDENT</span> PORTAL</h1>
+ <!--
+        pass_part_two = id
+    -->
+        <form onsubmit="return false;">
+            <div class="field">
+                <input type="text" id="username" placeholder="Username">
+                <small class="error" id="userError">
+                    Invalid username
+                </small>
             </div>
-        </div>
-    </div>
 
-    <!--
+            <div class="field">
+                <input type="password" id="password" placeholder="Password">
+                <span class="toggle" onclick="togglePassword()">👁</span>
+                <small class="error" id="passError">
+                    Invalid password
+                </small>
+            </div>
+<!--
         default_user = student
     -->
 
-    <!--
-        pass_part_one = vo
-    -->
+            <button type="button" onclick="checkLogin()">
+                Login
+            </button>
+        </form>
 
-    <!--
-        pass_part_two = id
-    -->
+        <div class="footer-text">
+            Made with ❤️ by <span>Soam & Vishal</span>
+        </div>
 
-    <!-- ================= JS LOGIC ================= -->
-    <script>
-        function togglePassword() {
-            const pass = document.getElementById("password");
-            pass.type = pass.type === "password" ? "text" : "password";
-        }
+    </div>
+</div>
 
-        function checkLogin() {
-            const user = document.getElementById("username").value.trim();
-            const pass = document.getElementById("password").value.trim();
+<script>
+function togglePassword() {
+    const pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
 
-            const userError = document.getElementById("userError");
-            const passError = document.getElementById("passError");
+function checkLogin() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
 
-            userError.style.display = "none";
-            passError.style.display = "none";
+    const userError = document.getElementById("userError");
+    const passError = document.getElementById("passError");
 
-            if (user !== "student") {
-                userError.style.display = "block";
-                return;
-            }
+    userError.style.display = "none";
+    passError.style.display = "none";
 
-            if (pass !== "void") {
-                passError.style.display = "block";
-                return;
-            }
+    // 🔓 intentionally weak login
+    if (user !== "student") {
+        userError.style.display = "block";
+        return;
+    }
 
-            // SUCCESS (intentional weak client-side auth)
-            window.location.href = "about.html";
-        }
-    </script>
+    if (pass !== "void") {
+        passError.style.display = "block";
+        return;
+    }
+
+    // ✅ redirect to about page
+    window.location.href = "/about";
+}
+</script>
 
 </body>
 </html>

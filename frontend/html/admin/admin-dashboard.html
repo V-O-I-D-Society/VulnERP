@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Reset | VulnERP</title>
+  <link rel="stylesheet" href="../../css/admin.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <h2>Reset Admin Password</h2>
+
+    <input type="text" id="email" placeholder="Admin Email">
+    <input type="text" id="otp" placeholder="OTP (3-digit)">
+
+    <button onclick="resetAdmin()">Reset Password</button>
+
+    <p class="footer">Made with ❤️ by Soam & Vishal</p>
+
+  </div>
+</div>
+
+<script>
+/*
+  ⚠️ LOGIC FLAW
+  - OTP predictable
+  - Email not verified
+*/
+function resetAdmin() {
+  const otp = document.getElementById("otp").value;
+
+  if (otp === "111") {
+    sessionStorage.setItem("admin_auth", "true");
+    alert("Password reset successful");
+    window.location.href = "admin-dashboard.html";
+  } else {
+    alert("Invalid OTP");
+  }
+}
+</script>
+
+</body>
+</html>

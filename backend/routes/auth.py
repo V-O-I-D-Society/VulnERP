@@ -4,13 +4,17 @@ from backend.models.session import create_session, get_user_from_session
 
 auth_bp = Blueprint("auth", __name__)
 
+# 🔴 Broken Authentication + Role Trust
 @auth_bp.route("/login", methods=["POST"])
 def login():
     if not request.is_json:
         return {"error": "JSON required"}, 415
 
     data = request.get_json()
+
+    # 🔴 trusting client-controlled input
     username = data.get("username")
+    requested_role = data.get("role")  # attacker-controlled
 
     if not username:
         return {"error": "Username required"}, 400
@@ -20,6 +24,11 @@ def login():
     if not user:
         return {"error": "Invalid username"}, 401
 
+    # 🔴 ROLE OVERRIDE (intentional vulnerability)
+    if requested_role:
+        user.role = requested_role
+
+    # 🔴 weak / predictable session
     session_id = create_session(user)
 
     return {
@@ -29,6 +38,7 @@ def login():
     }
 
 
+# 🔴 Broken Access Control
 @auth_bp.route("/me", methods=["GET"])
 def current_user():
     session_id = request.headers.get("Session-Id")
@@ -41,4 +51,5 @@ def current_user():
     if not user:
         return {"error": "Invalid session"}, 401
 
+    # 🔴 no role / privilege validation
     return user.to_dict()

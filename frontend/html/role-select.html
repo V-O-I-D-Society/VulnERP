@@ -27,8 +27,8 @@
           academic records, and general information.
         </p>
 
-
-        <a href="student/student-login.html" class="role-btn">
+        <!-- 🔴 Role passed via URL -->
+        <a href="student/student-login.html?role=student" class="role-btn">
           Student Login
         </a>
       </div>
@@ -42,9 +42,8 @@
           responsibilities and student-related data.
         </p>
 
-    
-
-        <a href="faculty/faculty-login.html" class="role-btn secondary">
+        <!-- 🔴 Role passed via URL -->
+        <a href="faculty/faculty-login.html?role=faculty" class="role-btn secondary">
           Faculty Login
         </a>
       </div>
@@ -53,7 +52,17 @@
 
   </div>
 
-  <!-- Small corner disclaimer -->
+  <!-- 
+    Security Note:
+    Role selection is handled entirely on the client side.
+    Users can manipulate role values manually.
+  -->
+
+  <!-- 
+    Hidden admin path (discoverable via source inspection)
+    <a href="admin/admin-login.html?role=admin">Admin Login</a>
+  -->
+
   <div class="corner-note">
     This system is intentionally vulnerable and created for educational
     security practice only.

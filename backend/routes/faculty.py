@@ -5,7 +5,7 @@ from backend.models.user import get_db, User
 faculty_bp = Blueprint("faculty", __name__)
 
 # ================================
-# Faculty Dashboard
+# Faculty Dashboard (Baseline Secure)
 # ================================
 @faculty_bp.route("/dashboard", methods=["GET"])
 def dashboard():
@@ -28,19 +28,29 @@ def dashboard():
 
 
 # ================================
-# View Student Marks (IDOR)
+# View Student Marks
+# IDOR + SQL Injection
 # ================================
 @faculty_bp.route("/marks", methods=["GET"])
 def view_marks():
     student_id = request.args.get("student_id")
+
     if not student_id:
         return {"error": "student_id required"}, 400
+
+    # 🔴 No session validation
+    # 🔴 No ownership or scope check
 
     conn = get_db()
     cursor = conn.cursor()
 
-    query = f"SELECT id, username, role, password, marks FROM users WHERE id = {student_id}"
-    cursor.execute(query)  # ❌ SQLi + IDOR
+    # 🔴 SQL Injection vulnerable query
+    query = f"""
+        SELECT id, username, role, password, marks
+        FROM users
+        WHERE id = {student_id}
+    """
+    cursor.execute(query)
 
     row = cursor.fetchone()
     conn.close()
@@ -52,30 +62,43 @@ def view_marks():
 
     return {
         "student": student.username,
-        "marks": student.marks
+        "marks": student.marks,
+        "note": "No access control enforced"
     }
 
 
 # ================================
-# Update Marks (NO AUTH)
+# Update Student Marks
+# Missing Authentication + SQLi
 # ================================
 @faculty_bp.route("/update-marks", methods=["POST"])
 def update_marks():
-    data = request.get_json()
+    data = request.get_json() or {}
+
     student_id = data.get("student_id")
     marks = data.get("marks")
 
     if not student_id or marks is None:
         return {"error": "student_id and marks required"}, 400
 
+    # 🔴 No authentication
+    # 🔴 Any user can update marks
+
     conn = get_db()
     cursor = conn.cursor()
 
-    query = f"UPDATE users SET marks = {marks} WHERE id = {student_id}"
-    cursor.execute(query)  # ❌ SQLi
+    # 🔴 SQL Injection vulnerable update
+    query = f"""
+        UPDATE users
+        SET marks = {marks}
+        WHERE id = {student_id}
+    """
+    cursor.execute(query)
+
     conn.commit()
     conn.close()
 
     return {
-        "message": "Marks updated successfully"
+        "message": "Marks updated successfully",
+        "warning": "No authorization checks performed"
     }

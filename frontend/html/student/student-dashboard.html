@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard | VulnERP</title>
+  <link rel="stylesheet" href="../../css/dashboard.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>⭐ Student ERP</span>
+  <span id="topUser"></span>
+</div>
+
+<!-- PROFILE SECTION -->
+<div class="card">
+  <h2>Your Profile</h2>
+
+  <table>
+    <tr><td>Name</td><td id="name"></td></tr>
+    <tr><td>Branch</td><td>IT</td></tr>
+    <tr><td>Email</td><td id="email"></td></tr>
+    <tr><td>Roll No</td><td id="roll"></td></tr>
+  </table>
+</div>
+
+<!-- DASHBOARD -->
+<div class="card">
+  <h2>Academic Dashboard</h2>
+  <div class="grid">
+    <div class="box">CGPA<br><b id="cgpa"></b></div>
+    <div class="box">Attendance<br><b id="attendance"></b></div>
+    <div class="box">Lectures<br><b id="lectures"></b></div>
+    <div class="box">Backlogs<br><b id="backlogs"></b></div>
+  </div>
+</div>
+
+<p class="footer">Made with ❤️ by Soam & Vishal</p>
+
+<script>
+/*
+ ⚠️ Intentional IDOR vulnerability
+ Access controlled only via URL parameter
+*/
+
+const profiles = {
+  uditsoam: {
+    name: "Udit Soam",
+    email: "udit@gmail.com",
+    roll: "240029010194",
+    cgpa: "8.2",
+    attendance: "86%",
+    lectures: "132",
+    backlogs: "0"
+  },
+  vishal: {
+    name: "Vishal",
+    email: "vishal@gmail.com",
+    roll: "240029010195",
+    cgpa: "7.5",
+    attendance: "79%",
+    lectures: "120",
+    backlogs: "1"
+  },
+  vansh: {
+    name: "Vansh",
+    email: "vansh@gmail.com",
+    roll: "240029010196",
+    cgpa: "7.8",
+    attendance: "82%",
+    lectures: "124",
+    backlogs: "0"
+  },
+  shivanshu: {
+    name: "Shivanshu",
+    email: "shiv@gmail.com",
+    roll: "240029010197",
+    cgpa: "6.9",
+    attendance: "71%",
+    lectures: "118",
+    backlogs: "2"
+  },
+  varnit: {
+    name: "Varnit",
+    email: "varnit@gmail.com",
+    roll: "240029010198",
+    cgpa: "8.4",
+    attendance: "90%",
+    lectures: "140",
+    backlogs: "0"
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const user = params.get("user");
+
+if (!profiles[user]) {
+  alert("Invalid user");
+  // window.location.href = "../login.html"; // optional
+} else {
+  document.getElementById("topUser").innerText = user.toUpperCase();
+
+  document.getElementById("name").innerText = profiles[user].name;
+  document.getElementById("email").innerText = profiles[user].email;
+  document.getElementById("roll").innerText = profiles[user].roll;
+
+  document.getElementById("cgpa").innerText = profiles[user].cgpa;
+  document.getElementById("attendance").innerText = profiles[user].attendance;
+  document.getElementById("lectures").innerText = profiles[user].lectures;
+  document.getElementById("backlogs").innerText = profiles[user].backlogs;
+}
+</script>
+
+</body>
+</html>
