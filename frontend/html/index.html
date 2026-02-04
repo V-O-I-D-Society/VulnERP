@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Portal | VulnERP</title>
+
+    <!--
+        VulnERP Training Environment
+        This page demonstrates client-side
+        information disclosure & weak auth.
+    -->
+
+    <link rel="stylesheet" href="../css/landing.css">
+
+    <!-- role hint -->
+    <!-- access_role = student -->
+</head>
+<body>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+
+            <h1><span>STUDENT</span> PORTAL</h1>
+
+            <form onsubmit="return false;">
+                <div class="field">
+                    <input type="text" id="username" placeholder="Username">
+                    <small class="error" id="userError">
+                        You must enter a valid USERNAME
+                    </small>
+                </div>
+
+                <div class="field">
+                    <input type="password" id="password" placeholder="Password">
+                    <span class="toggle" onclick="togglePassword()">👁</span>
+                    <small class="error" id="passError">
+                        Please enter your Password.
+                    </small>
+                </div>
+
+                <button id="loginBtn" onclick="checkLogin()">
+                    Login
+                </button>
+            </form>
+
+            <div class="footer-text">
+                Made with ❤️ by <span>Soam & Vishal</span>
+            </div>
+        </div>
+    </div>
+
+    <!--
+        default_user = student
+    -->
+
+    <!--
+        pass_part_one = vo
+    -->
+
+    <!--
+        pass_part_two = id
+    -->
+
+    <!-- ================= JS LOGIC ================= -->
+    <script>
+        function togglePassword() {
+            const pass = document.getElementById("password");
+            pass.type = pass.type === "password" ? "text" : "password";
+        }
+
+        function checkLogin() {
+            const user = document.getElementById("username").value.trim();
+            const pass = document.getElementById("password").value.trim();
+
+            const userError = document.getElementById("userError");
+            const passError = document.getElementById("passError");
+
+            userError.style.display = "none";
+            passError.style.display = "none";
+
+            if (user !== "student") {
+                userError.style.display = "block";
+                return;
+            }
+
+            if (pass !== "void") {
+                passError.style.display = "block";
+                return;
+            }
+
+            // SUCCESS (intentional weak client-side auth)
+            window.location.href = "about.html";
+        }
+    </script>
+
+</body>
+</html>
