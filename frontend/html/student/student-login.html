@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Login | VulnERP</title>
+  <link rel="stylesheet" href="../../css/auth.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <h2>Student Login</h2>
+    <p class="sub-text">Login using your ERP credentials</p>
+
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <p class="footer">Made with ❤️ by Soam & Vishal</p>
+  </div>
+</div>
+<!--
+  ✔ No credentials in page source
+  ✔ Username enumeration possible
+  ✔ Password brute-force possible
+-->
+
+<script>
+function login() {
+  const u = document.getElementById("username").value;
+  const p = document.getElementById("password").value;
+
+  // fake delay for realism
+  setTimeout(() => {
+
+    // username check (enum possible)
+    if (["uditsoam","vishal","vansh","shivanshu","varnit"].includes(u)) {
+
+      // password check (logic flaw)
+      if (p.length >= 4) {
+        sessionStorage.setItem("auth", "true");
+        sessionStorage.setItem("user", u);
+
+        // redirect
+        window.location.href = "student-dashboard.html?user=" + u;
+      } else {
+        alert("Invalid password");
+      }
+
+    } else {
+      alert("User does not exist");
+    }
+
+  }, 500);
+}
+</script>
+
+
+</body>
+</html>
