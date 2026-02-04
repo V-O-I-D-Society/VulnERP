@@ -1,0 +1,106 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+}
+
+/* Page background */
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: radial-gradient(circle at top, #1c2b3a, #0b1320);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+/* Main card */
+.auth-card {
+    background: #1f2428;
+    padding: 45px 40px;
+    border-radius: 16px;
+    width: 380px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.6);
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+h1 span {
+    font-weight: 700;
+}
+
+/* Input field wrapper */
+.field {
+    margin-bottom: 18px;
+    position: relative;
+}
+
+/* Inputs */
+.field input {
+    width: 100%;
+    padding: 14px 12px;
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
+/* Placeholder */
+.field input::placeholder {
+    color: #cccccc;
+}
+
+/* Error text */
+.error {
+    color: #ff4d4d;
+    font-size: 0.75rem;
+    margin-top: 5px;
+    display: none; /* JS se control hota hai */
+}
+
+/* Password eye icon */
+.toggle {
+    position: absolute;
+    right: 12px;
+    top: 14px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+/* Login button */
+button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(to right, #0072ff, #00c6ff);
+    color: #ffffff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Footer text */
+.footer-text {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.85;
+    font-style: italic;
+}
+
+.footer-text span {
+    font-weight: 600;
+}
