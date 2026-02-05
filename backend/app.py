@@ -13,7 +13,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Settings)
 
-    # register blueprints
+    # -------------------------------
+    # Register backend APIs
+    # -------------------------------
     app.register_blueprint(auth_bp)
     app.register_blueprint(student_bp, url_prefix="/student")
     app.register_blueprint(faculty_bp, url_prefix="/faculty")
@@ -29,7 +31,7 @@ def create_app():
     ASSETS_DIR = os.path.join(FRONTEND_DIR, "assets")
 
     # -------------------------------
-    # Static file routes
+    # Static files
     # -------------------------------
     @app.route("/css/<path:filename>")
     def css_files(filename):
@@ -46,13 +48,40 @@ def create_app():
     def landing_page():
         return send_from_directory(HTML_DIR, "index.html")
 
-    @app.route("/login")
-    def login_page():
-        return send_from_directory(HTML_DIR, "login.html")
-
     @app.route("/role-select")
     def role_select():
         return send_from_directory(HTML_DIR, "role-select.html")
+
+    # -------------------------------
+    # 🔑 LOGIN PAGES (FIXED)
+    # -------------------------------
+    @app.route("/student-login")
+    def student_login_page():
+        return send_from_directory(
+            os.path.join(HTML_DIR, "student"),
+            "student-login.html"
+        )
+
+    @app.route("/faculty-login")
+    def faculty_login_page():
+        return send_from_directory(
+            os.path.join(HTML_DIR, "faculty"),
+            "faculty-login.html"
+        )
+
+    @app.route("/admin-login")
+    def admin_login_page():
+        return send_from_directory(
+            os.path.join(HTML_DIR, "admin"),
+            "admin-login.html"
+        )
+
+    @app.route("/admin-reset")
+    def admin_reset_page():
+        return send_from_directory(
+            os.path.join(HTML_DIR, "admin"),
+            "admin-reset.html"
+        )
 
     # -------------------------------
     # 🔴 About page – Reflected XSS
@@ -62,11 +91,10 @@ def create_app():
         feedback = request.args.get("message")
         about_path = os.path.join(HTML_DIR, "about.html")
 
-        # Read raw HTML file
         with open(about_path, "r", encoding="utf-8") as f:
             html = f.read()
 
-        # 🔴 Intentionally unsafe reflection(reflected xss)
+        # 🔥 Intentionally unsafe reflection
         if feedback:
             html = html.replace(
                 "</section>",
@@ -79,7 +107,6 @@ def create_app():
                 """
             )
 
-        # ✅ ALWAYS return HTML
         return html
 
     # -------------------------------

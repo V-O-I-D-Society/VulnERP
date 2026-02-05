@@ -5,6 +5,7 @@
   <title>Student Login | VulnERP</title>
   <link rel="stylesheet" href="../../css/auth.css">
 </head>
+
 <body>
 
 <div class="auth-wrapper">
@@ -20,30 +21,31 @@
     <p class="footer">Made with ❤️ by Soam & Vishal</p>
   </div>
 </div>
-<!--
-  ✔ No credentials in page source
-  ✔ Username enumeration possible
-  ✔ Password brute-force possible
--->
 
 <script>
 function login() {
-  const u = document.getElementById("username").value;
-  const p = document.getElementById("password").value;
+  const u = document.getElementById("username").value.trim();
+  const p = document.getElementById("password").value.trim();
 
-  // fake delay for realism
+  if (!u || !p) {
+    alert("Username or password cannot be empty");
+    return;
+  }
+
   setTimeout(() => {
 
-    // username check (enum possible)
+    // username enumeration possible
     if (["uditsoam","vishal","vansh","shivanshu","varnit"].includes(u)) {
 
-      // password check (logic flaw)
+      // weak password logic (intentional vuln)
       if (p.length >= 4) {
+
         sessionStorage.setItem("auth", "true");
         sessionStorage.setItem("user", u);
 
-        // redirect
-        window.location.href = "student-dashboard.html?user=" + u;
+        // ✅ SAME FOLDER redirect
+        window.location.href = "/student/dashboard?user=" + u;
+
       } else {
         alert("Invalid password");
       }
@@ -55,7 +57,6 @@ function login() {
   }, 500);
 }
 </script>
-
 
 </body>
 </html>

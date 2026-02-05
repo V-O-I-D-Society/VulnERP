@@ -11,8 +11,8 @@ student_bp = Blueprint("student", __name__)
 def dashboard():
     session_id = request.headers.get("Session-Id")
 
-    if not session_id:
-        return {"error": "Session required"}, 401
+    # if not session_id:
+    #     return {"error": "Session required"}, 401
 
     # 🔴 VULNERABILITY:
     # trusting client-controlled session string

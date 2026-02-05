@@ -27,8 +27,9 @@
           academic records, and general information.
         </p>
 
-        <!-- 🔴 Role passed via URL -->
-        <a href="student/student-login.html?role=student" class="role-btn">
+        <!-- ✅ FIXED: Flask route -->
+        <!-- 🔴 Role still passed via URL (client-side trust issue) -->
+        <a href="/student-login?role=student" class="role-btn">
           Student Login
         </a>
       </div>
@@ -42,8 +43,9 @@
           responsibilities and student-related data.
         </p>
 
-        <!-- 🔴 Role passed via URL -->
-        <a href="faculty/faculty-login.html?role=faculty" class="role-btn secondary">
+        <!-- ✅ FIXED: Flask route -->
+        <!-- 🔴 Role still passed via URL -->
+        <a href="/faculty-login?role=faculty" class="role-btn secondary">
           Faculty Login
         </a>
       </div>
@@ -59,8 +61,8 @@
   -->
 
   <!-- 
-    Hidden admin path (discoverable via source inspection)
-    <a href="admin/admin-login.html?role=admin">Admin Login</a>
+    🔥 Hidden admin path (discoverable via source inspection)
+    <a href="/admin-login?role=admin">Admin Login</a>
   -->
 
   <div class="corner-note">
