@@ -112,7 +112,7 @@ def create_app():
     # -------------------------------
     # Dashboards (frontend only)
     # -------------------------------
-    @app.route("/student/dashboard")
+    @app.route("/student/home")
     def student_dashboard():
         return send_from_directory(
             os.path.join(HTML_DIR, "student"),

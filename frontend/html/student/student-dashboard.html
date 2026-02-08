@@ -40,8 +40,9 @@
 
 <script>
 /*
- ⚠️ Intentional IDOR vulnerability
- Access controlled only via URL parameter
+ 🔴 IDOR vulnerability
+ - Identity controlled via URL
+ - No session / ownership validation
 */
 
 const profiles = {
@@ -92,25 +93,34 @@ const profiles = {
   }
 };
 
+// 🔴 attacker-controlled input
 const params = new URLSearchParams(window.location.search);
-const user = params.get("user");
+let user = params.get("user");
 
-if (!profiles[user]) {
-  alert("Invalid user");
-  // window.location.href = "../login.html"; // optional
+// normalize input (bug fix)
+if (user) {
+  user = user.trim().toLowerCase();
+}
+
+// 🔴 blind trust
+const data = profiles[user];
+
+if (!data) {
+  alert("User not found (but URL tampering allowed)");
 } else {
   document.getElementById("topUser").innerText = user.toUpperCase();
 
-  document.getElementById("name").innerText = profiles[user].name;
-  document.getElementById("email").innerText = profiles[user].email;
-  document.getElementById("roll").innerText = profiles[user].roll;
+  document.getElementById("name").innerText = data.name;
+  document.getElementById("email").innerText = data.email;
+  document.getElementById("roll").innerText = data.roll;
 
-  document.getElementById("cgpa").innerText = profiles[user].cgpa;
-  document.getElementById("attendance").innerText = profiles[user].attendance;
-  document.getElementById("lectures").innerText = profiles[user].lectures;
-  document.getElementById("backlogs").innerText = profiles[user].backlogs;
+  document.getElementById("cgpa").innerText = data.cgpa;
+  document.getElementById("attendance").innerText = data.attendance;
+  document.getElementById("lectures").innerText = data.lectures;
+  document.getElementById("backlogs").innerText = data.backlogs;
 }
 </script>
+
 
 </body>
 </html>

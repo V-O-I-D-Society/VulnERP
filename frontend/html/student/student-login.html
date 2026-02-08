@@ -44,7 +44,7 @@ function login() {
         sessionStorage.setItem("user", u);
 
         // ✅ SAME FOLDER redirect
-        window.location.href = "/student/dashboard?user=" + u;
+        window.location.href = "/student/home?user=" + u;
 
       } else {
         alert("Invalid password");

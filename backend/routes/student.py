@@ -4,15 +4,19 @@ from backend.models.user import get_db, User
 student_bp = Blueprint("student", __name__)
 
 # ================================
-# Student Dashboard
+# Student Dashboard (API)
 # Broken Access Control
 # ================================
 @student_bp.route("/dashboard", methods=["GET"])
 def dashboard():
     session_id = request.headers.get("Session-Id")
 
-    # if not session_id:
-    #     return {"error": "Session required"}, 401
+    # 🔴 FIXED CRASH but vulnerability preserved
+    if not session_id:
+        return {
+            "warning": "No session provided",
+            "note": "Frontend dashboard still accessible directly"
+        }, 200
 
     # 🔴 VULNERABILITY:
     # trusting client-controlled session string
@@ -20,7 +24,7 @@ def dashboard():
         return {"error": "Access denied"}, 403
 
     return {
-        "message": "Welcome to Student Dashboard",
+        "message": "Welcome to Student Dashboard (API)",
         "session": session_id,
         "note": "Access granted based on session prefix only"
     }

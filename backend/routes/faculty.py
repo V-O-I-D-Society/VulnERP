@@ -1,30 +1,26 @@
-from flask import Blueprint, request
-from backend.models.session import get_user_from_session
+from flask import Blueprint, request, send_from_directory
+import os
 from backend.models.user import get_db, User
 
 faculty_bp = Blueprint("faculty", __name__)
 
 # ================================
-# Faculty Dashboard (Baseline Secure)
+# Faculty Dashboard (Broken Access Control)
 # ================================
 @faculty_bp.route("/dashboard", methods=["GET"])
 def dashboard():
+    # 🔴 Session optional
     session_id = request.headers.get("Session-Id")
 
-    if not session_id:
-        return {"error": "Session required"}, 401
+    # 🔴 No real validation
+    # Anyone can access dashboard directly
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    HTML_DIR = os.path.join(BASE_DIR, "..", "..", "frontend", "html", "faculty")
 
-    user = get_user_from_session(session_id)
-    if not user:
-        return {"error": "Invalid session"}, 401
-
-    if user.role != "faculty":
-        return {"error": "Access denied"}, 403
-
-    return {
-        "message": "Welcome to Faculty Dashboard",
-        "faculty": user.to_dict()
-    }
+    return send_from_directory(
+        HTML_DIR,
+        "faculty-dashboard.html"
+    )
 
 
 # ================================
@@ -39,12 +35,12 @@ def view_marks():
         return {"error": "student_id required"}, 400
 
     # 🔴 No session validation
-    # 🔴 No ownership or scope check
+    # 🔴 No role check
 
     conn = get_db()
     cursor = conn.cursor()
 
-    # 🔴 SQL Injection vulnerable query
+    # 🔴 SQL Injection vulnerable
     query = f"""
         SELECT id, username, role, password, marks
         FROM users
@@ -63,13 +59,13 @@ def view_marks():
     return {
         "student": student.username,
         "marks": student.marks,
-        "note": "No access control enforced"
+        "warning": "No access control enforced"
     }
 
 
 # ================================
 # Update Student Marks
-# Missing Authentication + SQLi
+# Missing Auth + SQLi
 # ================================
 @faculty_bp.route("/update-marks", methods=["POST"])
 def update_marks():
@@ -87,7 +83,7 @@ def update_marks():
     conn = get_db()
     cursor = conn.cursor()
 
-    # 🔴 SQL Injection vulnerable update
+    # 🔴 SQL Injection vulnerable
     query = f"""
         UPDATE users
         SET marks = {marks}
